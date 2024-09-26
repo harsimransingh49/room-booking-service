@@ -1,9 +1,10 @@
-package com.room.booking.processor;
+package com.room.booking.processor.impl;
 
 import com.room.booking.helper.BookingHelper;
 import com.room.booking.model.entity.BookingSlotEntity;
 import com.room.booking.model.entity.MeetingRoomEntity;
 import com.room.booking.model.entity.RoomBookingEntity;
+import com.room.booking.processor.RoomBookingProcessor;
 import com.room.booking.repository.BookingSlotRepository;
 import com.room.booking.repository.RoomBookingRepository;
 import lombok.RequiredArgsConstructor;
