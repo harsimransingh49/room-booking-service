@@ -7,5 +7,5 @@ import org.antlr.v4.runtime.misc.Pair;
 import java.util.List;
 
 public interface RoomBookingProcessor {
-    public Pair<MeetingRoomEntity, RoomBookingEntity> bookMeetingRoom(List<MeetingRoomEntity> meetingRoomEntities, String requestId, String userName, Integer startMinute, Integer endMinute);
+    Pair<MeetingRoomEntity, RoomBookingEntity> bookMeetingRoom(List<MeetingRoomEntity> meetingRoomEntities, String requestId, String userName, Integer startMinute, Integer endMinute);
 }
