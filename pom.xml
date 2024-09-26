@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.room.booking</groupId>
 	<artifactId>room-booking-service</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>Room Booking Service</name>
 	<description>Conference room booking application</description>
 	<properties>
