@@ -42,7 +42,7 @@ public class BookingController {
      * @return Response Object
      * @throws AppException if booking is not done
      */
-    @Operation(summary = "Room booking API", description = "API to book room conference room by no. of people and time range in HH:mm format")
+    @Operation(summary = "Room booking API", description = "API to book conference room by no. of people and time range in HH:mm format")
     @PostMapping("/book-room")
     public ResponseEntity<ResponseDto<Object>> bookMeetingRoom(@RequestBody @Valid RoomBookingRequestDto bookingRequestDto) throws AppException {
         log.info("Received booking request for {} people from {} to {}", bookingRequestDto.getNoOfPeople(), bookingRequestDto.getStartTime(), bookingRequestDto.getEndTime());
