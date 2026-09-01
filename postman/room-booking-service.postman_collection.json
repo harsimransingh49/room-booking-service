@@ -1,0 +1,96 @@
+{
+  "info": {
+    "name": "Room Booking Service",
+    "description": "Books the smallest room that fits. Times must be HH:mm on 15-minute marks. Rooms: Amaze 3, Beauty 7, Inspire 12, Strive 20. Maintenance: 09:00-09:15, 13:00-13:15, 17:00-17:15.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080" },
+    { "key": "bookingDate", "value": "2026-12-15" },
+    { "key": "bookingId", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "X-Request-Id", "value": "{{$guid}}" }],
+        "url": "{{baseUrl}}/actuator/health"
+      }
+    },
+    {
+      "name": "List rooms",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "X-Request-Id", "value": "{{$guid}}" }],
+        "url": "{{baseUrl}}/api/v1/rooms"
+      }
+    },
+    {
+      "name": "Available rooms",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "X-Request-Id", "value": "{{$guid}}" }],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/rooms/available?startTime=10:00&endTime=10:30&date={{bookingDate}}&people=5",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "rooms", "available"],
+          "query": [
+            { "key": "startTime", "value": "10:00" },
+            { "key": "endTime", "value": "10:30" },
+            { "key": "date", "value": "{{bookingDate}}" },
+            { "key": "people", "value": "5" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Book room",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "if (pm.response.code === 201) {",
+              "  pm.collectionVariables.set('bookingId', pm.response.json().id);",
+              "}"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "X-Request-Id", "value": "{{$guid}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"userName\": \"alice\",\n  \"people\": 5,\n  \"startTime\": \"10:00\",\n  \"endTime\": \"10:30\",\n  \"date\": \"{{bookingDate}}\",\n  \"idempotencyKey\": \"stand-up-1\"\n}"
+        },
+        "url": "{{baseUrl}}/api/v1/bookings"
+      }
+    },
+    {
+      "name": "Get booking",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "X-Request-Id", "value": "{{$guid}}" }],
+        "url": "{{baseUrl}}/api/v1/bookings/{{bookingId}}"
+      }
+    },
+    {
+      "name": "List bookings for date",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "X-Request-Id", "value": "{{$guid}}" }],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/bookings?date={{bookingDate}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "bookings"],
+          "query": [{ "key": "date", "value": "{{bookingDate}}" }]
+        }
+      }
+    }
+  ]
+}

@@ -8,7 +8,5 @@ class BookingApplicationTests {
 
     @Test
     void contextLoads() {
-        // This tests the spring boot app startup
     }
-
 }
